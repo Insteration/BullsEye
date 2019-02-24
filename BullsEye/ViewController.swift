@@ -27,6 +27,7 @@ class ViewController: UIViewController {
         currentValue = Int.random(in: 1...100)
         slider.value = Float(currentValue)
         updateLabels()
+        graph()
     }
     
     func updateLabels() {
@@ -34,6 +35,14 @@ class ViewController: UIViewController {
         scoreLabel.text = String(score)
         roundLabel.text = String(round)
         //        targetLabel.text = "\(targetValue)"
+    }
+    
+    func graph() {
+        let transition = CATransition()
+        transition.type = CATransitionType.fade
+        transition.duration = 1
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        view.layer.add(transition, forKey: nil)
     }
     
     override func viewDidLoad() {
@@ -101,10 +110,9 @@ class ViewController: UIViewController {
         //        let message = "The value of the slder is: \(currentValue)" + "\nThe target value is: \(targetValue)" + "\nThe difference is: \(difference)"
         let message = "You scored \(points) points"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: {_ in self.startNewRound()})
+        let action = UIAlertAction(title: "OK", style: .default, handler: {_ in self.startNewRound()}) // ассинхронность данных, вызов функции после нажатия кнопки
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-        
 //        startNewRound()
     }
     
@@ -119,6 +127,8 @@ class ViewController: UIViewController {
         score = 0
         round = 0
         startNewRound()
+        
+        graph()
     }
 }
 
